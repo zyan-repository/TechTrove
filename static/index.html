@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrove - Technology Course Library</title>
+    <link rel="stylesheet" href="./static/css/modules/base.css">
+    <link rel="stylesheet" href="./static/css/modules/layout.css">
+    <link rel="stylesheet" href="./static/css/modules/components.css">
+    <link rel="stylesheet" href="./static/css/modules/forms.css">
+    <link rel="stylesheet" href="./static/css/modules/utilities.css">
+    <link rel="stylesheet" href="./static/css/modules/responsive.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">TechTrove</h1>
+                <div class="header-actions">
+                    <button id="add-creator-btn" class="btn btn-secondary">Add Creator</button>
+                    <button id="add-course-btn" class="btn btn-primary">Add New Course</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Course Catalog Page (Homepage) -->
+                <div id="catalog-page" class="page active">
+                    <div class="page-header">
+                        <h2>Course Catalog</h2>
+                        <p>Discover and learn from technology experts</p>
+                    </div>
+                    
+                    <div class="filters">
+                        <input type="text" id="search-input" placeholder="Search courses..." class="search-input">
+                        <select id="type-filter" class="filter-select">
+                            <option value="">All Types</option>
+                            <option value="video">Video</option>
+                            <option value="article">Article</option>
+                            <option value="tutorial">Tutorial</option>
+                        </select>
+                    </div>
+
+                    <div id="courses-grid" class="courses-grid">
+                        <!-- Course cards will be dynamically loaded here -->
+                    </div>
+                </div>
+
+                <!-- Course Detail Page -->
+                <div id="course-detail-page" class="page">
+                    <div class="course-detail-container">
+                        <div class="course-detail-header">
+                            <button id="back-to-catalog" class="btn btn-secondary">← Back to Catalog</button>
+                            <div class="course-detail-actions">
+                                <button id="edit-course-btn" class="btn btn-secondary">Edit Course</button>
+                                <button id="delete-course-btn" class="btn btn-danger">Delete Course</button>
+                            </div>
+                        </div>
+                        
+                        <div id="course-detail-content">
+                            <!-- Course detail content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Area -->
+                <div id="dynamic-content" class="dynamic-content hidden">
+                    <!-- Forms will be dynamically loaded here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading hidden">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

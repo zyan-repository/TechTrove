@@ -1,0 +1,102 @@
+/* Forms Module - Modal Forms and Form Elements */
+
+/* Dynamic Content Modal */
+.dynamic-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.dynamic-content.hidden,
+.loading.hidden,
+.page.hidden {
+    display: none;
+}
+
+.dynamic-content .form-container {
+    max-width: 700px;
+    width: 90%;
+    background: var(--bg-medium);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 0 30px var(--primary), 0 0 50px var(--secondary);
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid var(--primary);
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
+    padding-bottom: 1rem;
+}
+
+.form-header h2 {
+    margin: 0;
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary);
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--bg-light);
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
+    color: var(--text);
+    font-size: 0.95rem;
+    box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="url"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary), inset 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+    accent-color: var(--primary);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-top: 1px dashed rgba(0, 255, 65, 0.3);
+    padding-top: 1.5rem;
+}
