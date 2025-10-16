@@ -18,7 +18,14 @@
             <div class="container">
                 <h1 class="logo">TechTrove</h1>
                 <div class="header-actions">
-                    <button id="add-creator-btn" class="btn btn-secondary">Add Creator</button>
+                    <div class="dropdown">
+                        <button id="creator-dropdown-btn" class="btn btn-secondary">Edit Creator</button>
+                        <div id="creator-dropdown-menu" class="dropdown-menu">
+                            <button id="add-creator-btn" class="dropdown-item">Add Creator</button>
+                            <button id="update-creator-btn" class="dropdown-item">Update Creator</button>
+                            <button id="delete-creator-btn" class="dropdown-item">Delete Creator</button>
+                        </div>
+                    </div>
                     <button id="add-course-btn" class="btn btn-primary">Add New Course</button>
                 </div>
             </div>

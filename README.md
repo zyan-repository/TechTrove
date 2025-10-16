@@ -8,7 +8,7 @@ TechTrove is a web platform designed to bridge the gap between aspiring learners
 
 ## Author
 
-Yian Zhou
+[Yian Zhou](https://github.com/zyan-repository)
 
 ## Class link
 
@@ -95,5 +95,5 @@ TechTrove/
 
 ## To-Do List
 
-- [ ] Implement `PUT /api/creators/:id` route for updating a creator.
-- [ ] Implement `DELETE /api/creators/:id` route for deleting a creator.
+- [x] Implement `PUT /api/creators/:id` route for updating a creator.
+- [x] Implement `DELETE /api/creators/:id` route for deleting a creator.

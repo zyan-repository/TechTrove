@@ -25,6 +25,14 @@ class TechTroveApp {
       this.showCreatorForm();
     });
 
+    document.getElementById("update-creator-btn").addEventListener("click", () => {
+      this.showCreatorUpdateForm();
+    });
+
+    document.getElementById("delete-creator-btn").addEventListener("click", () => {
+      this.showCreatorDeleteForm();
+    });
+
     document.getElementById("add-course-btn").addEventListener("click", () => {
       this.showCourseForm();
     });
@@ -508,6 +516,230 @@ class TechTroveApp {
       this.showPage("catalog");
     } catch (error) {
       console.error("Error creating creator:", error);
+      this.showToast(error.message, "error");
+    } finally {
+      this.showLoading(false);
+    }
+  }
+
+  async showCreatorUpdateForm() {
+    // Ensure creators are loaded
+    if (this.creators.length === 0) {
+      this.showLoading(true);
+      try {
+        const response = await fetch("/api/creators");
+        if (response.ok) {
+          this.creators = await response.json();
+        }
+      } catch (error) {
+        console.error("Error loading creators:", error);
+        this.showToast("Failed to load creators", "error");
+        return;
+      } finally {
+        this.showLoading(false);
+      }
+    }
+
+    const dynamicContent = document.getElementById("dynamic-content");
+    dynamicContent.innerHTML = `
+            <div class="form-container">
+                <div class="form-header">
+                    <button id="close-creator-form" class="btn btn-secondary">×</button>
+                    <h2>Update Creator</h2>
+                </div>
+                
+                <form id="creator-update-form" class="creator-form">
+                    <div class="form-group">
+                        <label for="creator-select">Select Creator *</label>
+                        <select id="creator-select" name="creatorId" required>
+                            <option value="">Choose a creator...</option>
+                            ${this.creators
+                              .map(
+                                (creator) =>
+                                  `<option value="${creator._id}">${this.escapeHtml(creator.name)} - ${this.escapeHtml(creator.title)}</option>`,
+                              )
+                              .join("")}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creator-name">Name *</label>
+                        <input type="text" id="creator-name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creator-title">Title *</label>
+                        <input type="text" id="creator-title" name="title" required placeholder="e.g., Senior Software Engineer at TechCorp">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creator-bio">Bio</label>
+                        <textarea id="creator-bio" name="bio" rows="4" placeholder="Expert in cloud computing and backend development with 10+ years of experience."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Update Creator</button>
+                        <button type="button" id="cancel-creator-form" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+    document.getElementById("creator-select").addEventListener("change", (e) => {
+      const selectedCreator = this.creators.find(c => c._id === e.target.value);
+      if (selectedCreator) {
+        document.getElementById("creator-name").value = selectedCreator.name;
+        document.getElementById("creator-title").value = selectedCreator.title;
+        document.getElementById("creator-bio").value = selectedCreator.bio || "";
+      }
+    });
+
+    document.getElementById("close-creator-form").addEventListener("click", () => {
+      this.hideDynamicContent();
+    });
+
+    document.getElementById("cancel-creator-form").addEventListener("click", () => {
+      this.hideDynamicContent();
+    });
+
+    document.getElementById("creator-update-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleCreatorUpdate();
+    });
+
+    dynamicContent.classList.remove("hidden");
+  }
+
+  async showCreatorDeleteForm() {
+    // Ensure creators are loaded
+    if (this.creators.length === 0) {
+      this.showLoading(true);
+      try {
+        const response = await fetch("/api/creators");
+        if (response.ok) {
+          this.creators = await response.json();
+        }
+      } catch (error) {
+        console.error("Error loading creators:", error);
+        this.showToast("Failed to load creators", "error");
+        return;
+      } finally {
+        this.showLoading(false);
+      }
+    }
+
+    const dynamicContent = document.getElementById("dynamic-content");
+    dynamicContent.innerHTML = `
+            <div class="form-container">
+                <div class="form-header">
+                    <button id="close-creator-form" class="btn btn-secondary">×</button>
+                    <h2>Delete Creator</h2>
+                </div>
+                
+                <form id="creator-delete-form" class="creator-form">
+                    <div class="form-group">
+                        <label for="creator-select">Select Creator to Delete *</label>
+                        <select id="creator-select" name="creatorId" required>
+                            <option value="">Choose a creator...</option>
+                            ${this.creators
+                              .map(
+                                (creator) =>
+                                  `<option value="${creator._id}">${this.escapeHtml(creator.name)} - ${this.escapeHtml(creator.title)}</option>`,
+                              )
+                              .join("")}
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-danger">Delete Creator</button>
+                        <button type="button" id="cancel-creator-form" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+    document.getElementById("close-creator-form").addEventListener("click", () => {
+      this.hideDynamicContent();
+    });
+
+    document.getElementById("cancel-creator-form").addEventListener("click", () => {
+      this.hideDynamicContent();
+    });
+
+    document.getElementById("creator-delete-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleCreatorDelete();
+    });
+
+    dynamicContent.classList.remove("hidden");
+  }
+
+  async handleCreatorUpdate() {
+    const form = document.getElementById("creator-update-form");
+    const formData = new FormData(form);
+
+    const creatorId = formData.get("creatorId");
+    const creatorData = {
+      name: formData.get("name"),
+      title: formData.get("title"),
+      bio: formData.get("bio"),
+    };
+
+    try {
+      this.showLoading(true);
+
+      const response = await fetch(`/api/creators/${creatorId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(creatorData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to update creator");
+      }
+
+      this.showToast("Creator updated successfully!", "success");
+      this.hideDynamicContent();
+      await this.loadData();
+      this.showPage("catalog");
+    } catch (error) {
+      console.error("Error updating creator:", error);
+      this.showToast(error.message, "error");
+    } finally {
+      this.showLoading(false);
+    }
+  }
+
+  async handleCreatorDelete() {
+    const form = document.getElementById("creator-delete-form");
+    const formData = new FormData(form);
+    const creatorId = formData.get("creatorId");
+
+    if (!confirm("Are you sure you want to delete this creator? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      this.showLoading(true);
+
+      const response = await fetch(`/api/creators/${creatorId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to delete creator");
+      }
+
+      this.showToast("Creator deleted successfully!", "success");
+      this.hideDynamicContent();
+      await this.loadData();
+      this.showPage("catalog");
+    } catch (error) {
+      console.error("Error deleting creator:", error);
       this.showToast(error.message, "error");
     } finally {
       this.showLoading(false);
