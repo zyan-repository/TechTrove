@@ -25,13 +25,17 @@ class TechTroveApp {
       this.showCreatorForm();
     });
 
-    document.getElementById("update-creator-btn").addEventListener("click", () => {
-      this.showCreatorUpdateForm();
-    });
+    document
+      .getElementById("update-creator-btn")
+      .addEventListener("click", () => {
+        this.showCreatorUpdateForm();
+      });
 
-    document.getElementById("delete-creator-btn").addEventListener("click", () => {
-      this.showCreatorDeleteForm();
-    });
+    document
+      .getElementById("delete-creator-btn")
+      .addEventListener("click", () => {
+        this.showCreatorDeleteForm();
+      });
 
     document.getElementById("add-course-btn").addEventListener("click", () => {
       this.showCourseForm();
@@ -585,27 +589,39 @@ class TechTroveApp {
             </div>
         `;
 
-    document.getElementById("creator-select").addEventListener("change", (e) => {
-      const selectedCreator = this.creators.find(c => c._id === e.target.value);
-      if (selectedCreator) {
-        document.getElementById("creator-name").value = selectedCreator.name;
-        document.getElementById("creator-title").value = selectedCreator.title;
-        document.getElementById("creator-bio").value = selectedCreator.bio || "";
-      }
-    });
+    document
+      .getElementById("creator-select")
+      .addEventListener("change", (e) => {
+        const selectedCreator = this.creators.find(
+          (c) => c._id === e.target.value,
+        );
+        if (selectedCreator) {
+          document.getElementById("creator-name").value = selectedCreator.name;
+          document.getElementById("creator-title").value =
+            selectedCreator.title;
+          document.getElementById("creator-bio").value =
+            selectedCreator.bio || "";
+        }
+      });
 
-    document.getElementById("close-creator-form").addEventListener("click", () => {
-      this.hideDynamicContent();
-    });
+    document
+      .getElementById("close-creator-form")
+      .addEventListener("click", () => {
+        this.hideDynamicContent();
+      });
 
-    document.getElementById("cancel-creator-form").addEventListener("click", () => {
-      this.hideDynamicContent();
-    });
+    document
+      .getElementById("cancel-creator-form")
+      .addEventListener("click", () => {
+        this.hideDynamicContent();
+      });
 
-    document.getElementById("creator-update-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.handleCreatorUpdate();
-    });
+    document
+      .getElementById("creator-update-form")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.handleCreatorUpdate();
+      });
 
     dynamicContent.classList.remove("hidden");
   }
@@ -658,18 +674,24 @@ class TechTroveApp {
             </div>
         `;
 
-    document.getElementById("close-creator-form").addEventListener("click", () => {
-      this.hideDynamicContent();
-    });
+    document
+      .getElementById("close-creator-form")
+      .addEventListener("click", () => {
+        this.hideDynamicContent();
+      });
 
-    document.getElementById("cancel-creator-form").addEventListener("click", () => {
-      this.hideDynamicContent();
-    });
+    document
+      .getElementById("cancel-creator-form")
+      .addEventListener("click", () => {
+        this.hideDynamicContent();
+      });
 
-    document.getElementById("creator-delete-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.handleCreatorDelete();
-    });
+    document
+      .getElementById("creator-delete-form")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.handleCreatorDelete();
+      });
 
     dynamicContent.classList.remove("hidden");
   }
@@ -718,7 +740,11 @@ class TechTroveApp {
     const formData = new FormData(form);
     const creatorId = formData.get("creatorId");
 
-    if (!confirm("Are you sure you want to delete this creator? This action cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this creator? This action cannot be undone.",
+      )
+    ) {
       return;
     }
 
